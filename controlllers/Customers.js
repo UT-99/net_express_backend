@@ -12,6 +12,43 @@ router.get("/contact", (req, resp) => {
   resp.end();
 });
 
+
+router.post ("/login",async  (req, resp)=>{
+        const {email , password}=  req.body;
+        // console.log("Request body is : ")
+        // console.log(req.body)
+        const result = await Customers.findOne({email : email}); 
+        // console.log("Result is : ")
+        // console.log(result.email)
+
+        try {
+            if (result != undefined){
+                if(result.email === email && password === result.password){
+                    resp.send("User signed in succesfull");
+                    resp.render("http://localhost:3000/")    
+                }
+                else {
+                    resp.send("invalid credentails ")
+                }
+            }
+            
+
+
+
+        }
+        catch (err){
+            resp.status(400).send(err)
+
+        }
+        
+       
+
+
+
+})
+
+
+
 router.post("/register", async (req, resp) => {
     debugger;
   const { firstname, lastname, email, password, confirmPassword } = req.body;
